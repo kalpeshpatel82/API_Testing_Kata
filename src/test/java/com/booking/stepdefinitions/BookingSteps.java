@@ -4,33 +4,46 @@ import com.booking.constants.EndPoints;
 import com.booking.models.Booking;
 import com.booking.models.BookingDates;
 import com.booking.models.BookingResponse;
+import io.cucumber.datatable.DataTable;
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+
+import java.util.List;
+import java.util.Objects;
 
 import static io.restassured.RestAssured.given;
 
 public class BookingSteps {
     private BookingResponse response;
 
-    @When("I want to create a booking using a valid testdata")
-    public void iWantToCreateABookingUsingAValidTestdata() {
+
+    @When("I want to create a booking using a valid testdata {string},{string},{string},{string},{string},{string},{string},{string}")
+    public void iWantToCreateABookingUsingAValidTestdata(String id,
+                                                         String firstname,
+                                                         String lastname,
+                                                         String depositePaid,
+                                                         String checkin,
+                                                         String checkout,
+                                                         String email,
+                                                         String phone) {
         // Set up the Request POJO
         BookingDates dates = new BookingDates();
-        dates.setCheckin("2025-10-13");
-        dates.setCheckout("2025-10-15");
+        dates.setCheckin(checkin);
+        dates.setCheckout(checkout);
 
         Booking newBooking = new Booking();
-        newBooking.setRoomid(2);
-        newBooking.setFirstname("John");
-        newBooking.setLastname("Doe");
-        newBooking.setDepositpaid(true);
+        newBooking.setRoomid(Integer.parseInt(id));
+        newBooking.setFirstname(firstname);
+        newBooking.setLastname(lastname);
+        newBooking.setDepositpaid(Boolean.parseBoolean(depositePaid));
         newBooking.setBookingdates(dates);
-        newBooking.setEmail("john.doe@example.com");
-        newBooking.setPhone("1234567890");
+        newBooking.setEmail(email);
+        newBooking.setPhone(phone);
 
-        System.out.println(newBooking.toString());
+        System.out.println(newBooking);
 
         // Execute Request and Extract Response as POJO
         response = given()
@@ -56,4 +69,6 @@ public class BookingSteps {
 
 
     }
+
+
 }

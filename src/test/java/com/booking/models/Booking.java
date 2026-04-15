@@ -10,8 +10,23 @@ public class Booking {
     private String phone;
 
     public String toString() {
-        StringBuffer str = new  StringBuffer();
-        str.append("{\"roomid\":"+roomid+" \"firstname\": \"John\",\"lastname\": \"Doe\",\"depositpaid\": true,\"bookingdates\": {\"checkin\": \"2025-10-13\",\"checkout\": \"2025-10-15\"},\"email\": \"john.doe@example.com\",\"phone\": \"1234567890\"}");
+        StringBuilder str = new StringBuilder();
+        String json = """
+                {
+                  "roomid": %d,
+                  "firstname": "%s",
+                  "lastname": "%s",
+                  "depositpaid": "%b",
+                  "bookingdates": {
+                    "checkin": "%s",
+                    "checkout": "%s"
+                  },
+                  "email": "%s",
+                  "phone": "%s"
+                }
+                """.formatted(roomid, firstname, lastname, depositpaid, bookingdates.getCheckin(), bookingdates.getCheckout(), email, phone);
+
+        str.append(json);
         return str.toString();
     }
 

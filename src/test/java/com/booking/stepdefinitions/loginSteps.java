@@ -1,6 +1,7 @@
 package com.booking.stepdefinitions;
 
 import com.booking.constants.EndPoints;
+import com.booking.models.LoginPoJo;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -22,10 +23,13 @@ public class loginSteps {
 
     @When("I want to login to application using a {string} and {string}")
     public void iWantToLoginToApplicationUsingAAnd(String user, String pass) {
-        String requestBody = String.format("{\"username\":\"%s\",\"password\":\"%s\"}", user, pass);
+        LoginPoJo loginData = new LoginPoJo();
+        loginData.setUsername(user);
+        loginData.setPassword(pass);
+        System.out.println(loginData);
         response = given()
                 .contentType(ContentType.JSON)
-                .body(requestBody)
+                .body(loginData.toString())
                 .when()
                 .post(EndPoints.LOGIN);
     }
