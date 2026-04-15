@@ -52,7 +52,7 @@ public class BookingSteps {
                 .when()
                 .post(EndPoints.BOOKING)
                 .then()
-                .statusCode(200) // Check for "Created" status
+                .statusCode(201) // Check for "Created" status
                 .extract()
                 .as(BookingResponse.class); // Deserialization
     }
